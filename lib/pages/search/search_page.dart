@@ -1,15 +1,16 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:get_qiita_app/api/search_article.dart';
 import 'package:get_qiita_app/pages/article/article_page.dart';
-import 'package:http/http.dart' as http;
+import 'package:get_qiita_app/pages/search/search_strings.dart';
 
-class SearchApp extends StatelessWidget {
-  const SearchApp({super.key});
+
+class SearchPage extends StatelessWidget {
+  const SearchPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'GitHub Repo Search',
+      title: 'Qiita Search',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -29,32 +30,11 @@ class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
   List<dynamic> _searchResults = [];
 
-  void _searchRepositories() async {
-    final String searchQuery = _searchController.text.trim();
-    if (searchQuery.isEmpty) {
-      return;
-    }
-
-    final response = await http.get(
-      Uri.parse('https://api.github.com/search/repositories?q=$searchQuery'),
-    );
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      setState(() {
-        _searchResults = data['items'];
-      });
-    } else {
-      // Handle error
-      print('Error: ${response.statusCode}');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('GitHub Repo Search'),
+        title: const Text(title),
       ),
       body: Column(
         children: [
@@ -63,39 +43,56 @@ class _SearchScreenState extends State<SearchScreen> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                labelText: 'Keyword',
+                labelText: hintText,
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.search),
-                  onPressed: _searchRepositories,
+                  onPressed: () async {
+                    final lists = await SearchArticles(_searchController.text);
+                    setState(() {
+                      _searchResults = lists;
+                    });
+                  },
                 ),
               ),
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _searchResults.length,
-              itemBuilder: (context, index) {
-                final repo = _searchResults[index];
-                return ListTile(
-                  title: Text(repo['name']),
-                  subtitle: Text(repo['description']),
-                  trailing: const Icon(Icons.chevron_right),
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(repo['owner']['avatar_url']),
+          FutureBuilder(
+            future: SearchArticles(_searchController.text),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else {
+              if (snapshot.hasError) {
+                return const Text(errorString);
+              } else {
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: _searchResults.length,
+                    itemBuilder: (context, index) {
+                      final repo = _searchResults[index];
+                      return ListTile(
+                        title: Text(repo['title']),
+                        subtitle: Text(repo['user']['id']),
+                        trailing: const Icon(Icons.chevron_right),
+
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ArticlePage(
+                                    title: repo['title'],
+                                    url: repo['url'],
+                                  ),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => ArticlePage(
-                          title: repo['name'],
-                          url: repo['owner']['html_url'],
-                        ),
-                      ),
-                    );
-                  },
                 );
-              },
-            ),
+              }
+            }
+          },
           ),
         ],
       ),

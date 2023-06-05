@@ -8,12 +8,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:get_qiita_app/main.dart';
+import 'package:get_qiita_app/pages/search/search_page.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const SearchPage());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
