@@ -3,7 +3,6 @@ import 'package:get_qiita_app/api/search_article.dart';
 import 'package:get_qiita_app/pages/article/article_page.dart';
 import 'package:get_qiita_app/pages/search/search_strings.dart';
 
-
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
 
