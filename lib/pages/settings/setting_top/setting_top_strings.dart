@@ -1,6 +1,9 @@
 /*
  * setting_topで使用する文言をここで管理する
  */
+/// 設定のAppBarタイトル
+const String settingPageTitle = '設定';
+
 /// 設定のヘッダー
 const String settingHeadLine = 'アクション';
 
