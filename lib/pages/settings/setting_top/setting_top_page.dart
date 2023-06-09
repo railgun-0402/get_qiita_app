@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get_qiita_app/pages/setting_top/setting_top_strings.dart';
+import 'package:get_qiita_app/pages/settings/setting_top/setting_top_strings.dart';
+import 'package:get_qiita_app/pages/theme/theme_page.dart';
 
 class SettingTopPage extends StatelessWidget {
   const SettingTopPage({Key? key}) : super(key: key);
@@ -13,6 +14,9 @@ class SettingTopPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(settingPageTitle),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -107,6 +111,50 @@ class SettingHeadLine extends StatelessWidget {
     return Align(
       alignment: Alignment.centerLeft,
       child: Text(title),
+    );
+  }
+}
+
+/// アプリのテーマを切り替える
+class SettingTheme extends StatelessWidget {
+  const SettingTheme({Key? key, required this.title}) : super(key: key);
+  final String title;
+  final String appVer = '1.0.0';
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+        padding: const EdgeInsets.all(1.5),
+        decoration: const BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: Colors.grey,
+              width: 1.2,
+            ),
+          ),
+        ),
+        child: ListTile(
+          leading: const Icon(Icons.bolt),
+          trailing: const Icon(Icons.chevron_right),
+          title: Text(
+            title,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+              fontWeight: FontWeight.w100,
+            ),
+          ),
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) =>
+                    const ThemePage(),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }

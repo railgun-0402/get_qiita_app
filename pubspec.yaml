@@ -40,6 +40,7 @@ dependencies:
   freezed_annotation: ^2.2.0
   json_annotation: ^4.8.1
   flutter_native_splash: ^2.3.1
+  flutter_riverpod: ^2.3.6
 
 flutter_native_splash:
   color: "FFFFFF"

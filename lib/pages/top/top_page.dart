@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_qiita_app/pages/search/search_page.dart';
-import 'package:get_qiita_app/pages/setting_top/setting_top_page.dart';
+import 'package:get_qiita_app/pages/settings/setting_top/setting_top_page.dart';
 
 final _pageWidgets = [
   const SearchPage(),
@@ -17,13 +17,12 @@ class TopPage extends StatefulWidget {
 class _TopPageState extends State<TopPage> {
 
   int _currentIndex = 0;
-  /// タブの高さ
-  static const double tabBarHeight = 10;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
       home: Scaffold(
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[

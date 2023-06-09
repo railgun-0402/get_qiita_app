@@ -8,12 +8,8 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Qiita Search',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const SearchScreen(),
+    return const Scaffold(
+      body: SearchScreen(),
     );
   }
 }
