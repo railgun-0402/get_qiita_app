@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get_qiita_app/pages/popular/popular_article_page.dart';
 import 'package:get_qiita_app/pages/search/search_page.dart';
 import 'package:get_qiita_app/pages/settings/setting_top/setting_top_page.dart';
+import 'package:get_qiita_app/pages/top/top_strings.dart';
 
 final _pageWidgets = [
+  const PopularArticlePage(),
   const SearchPage(),
   const SettingTopPage()
 ];
@@ -26,10 +29,9 @@ class _TopPageState extends State<TopPage> {
       home: Scaffold(
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: '検索'),
-            // TODO: 人気記事のページも作成後、下記実装を利用する
-            // BottomNavigationBarItem(icon: Icon(Icons.fire_hydrant), label: '人気記事'),
-            BottomNavigationBarItem(icon: Icon(Icons.settings), label: '設定'),
+            BottomNavigationBarItem(icon: Icon(Icons.fire_hydrant), label: popularTab),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: searchTab),
+            BottomNavigationBarItem(icon: Icon(Icons.settings), label: settingTab),
           ],
           currentIndex: _currentIndex,
           fixedColor: Colors.blueAccent,
