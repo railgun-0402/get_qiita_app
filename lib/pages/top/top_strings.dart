@@ -24,3 +24,12 @@ const String lightMode = 'ライトモード';
 
 /// ダークモード文言
 const String darkMode = 'ダークモード';
+
+/// タブ：人気記事
+const String popularTab = '人気記事';
+
+/// タブ：検索
+const String searchTab = '検索';
+
+/// タブ：設定
+const String settingTab = '設定';
